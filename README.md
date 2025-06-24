@@ -22,6 +22,7 @@ Install them using pip if needed:
 
 ```bash
 pip install requests beautifulsoup4
+```
 
 ✅ 📌 Description (70–80 words)
 This Python script scrapes the top 5 trending repositories from GitHub Trending and saves the ranking, repository name, and link into a CSV file. It uses the requests library to fetch HTML and BeautifulSoup to parse the content. The output file is timestamped with the current date and time in the format dd-mm-yyyy_HHMMSS and saved in the same directory. This tool is helpful for quickly tracking what’s popular on GitHub at any moment.
