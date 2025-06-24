@@ -28,39 +28,34 @@ pip install requests beautifulsoup4
 This Python script scrapes the top 5 trending repositories from GitHub Trending and saves the ranking, repository name, and link into a CSV file. It uses the requests library to fetch HTML and BeautifulSoup to parse the content. The output file is timestamped with the current date and time in the format dd-mm-yyyy_HHMMSS and saved in the same directory. This tool is helpful for quickly tracking what’s popular on GitHub at any moment.
 
 ## 🧠 Approach
-Import Required Libraries
-The script uses the following libraries:
 
-requests for sending HTTP requests
+1. **Import Required Libraries**  
+   The script uses the following libraries:
+   - `requests` for sending HTTP requests
+   - `BeautifulSoup` from `bs4` for parsing the HTML content
+   - `csv` to write the scraped data into a CSV file
+   - `datetime` to generate a timestamp for the output file name
 
-BeautifulSoup from bs4 for parsing the HTML content
+2. **Fetch the GitHub Trending Page**  
+   The script sends a GET request to [https://github.com/trending](https://github.com/trending) to retrieve the current list of trending repositories.
 
-csv to write the scraped data into a CSV file
+3. **Parse HTML Content**  
+   The fetched HTML is parsed using `BeautifulSoup` with the `lxml` parser.  
+   The script searches for all `<article>` tags with the class `"Box-row"`, each representing a trending repository.
 
-datetime to generate a timestamp for the output file name
+4. **Extract Repository Data**  
+   From each article block, the script extracts:
+   - The `<a>` tag inside an `<h2>` tag with class `"h3 lh-condensed"`
+   - The `href` attribute, which contains the path to the repository (e.g., `/DrKLO/Telegram`)
+   - A full GitHub URL is built by prepending `https://github.com`
+   - The repository name is cleaned by removing slashes
 
-Fetch the GitHub Trending Page
-The script sends a GET request to https://github.com/trending to retrieve the current list of trending repositories.
+5. **Generate a Timestamped Filename**  
+   A filename is created using the current date and time in the format `dd-mm-yyyy_HHMMSS`, ensuring uniqueness and traceability.
 
-Parse HTML Content
-The fetched HTML content is parsed using BeautifulSoup with the lxml parser. The script searches for all <article> tags with the class "Box-row", each representing one trending repository.
+6. **Write Data to CSV**  
+   The script writes data into a CSV file with the columns: `ranking`, `repository name`, and `link`. Only the top 5 repositories are recorded.
 
-Extract Repository Data
-From each article block, the script extracts:
+7. **Save Output**  
+   The CSV file is saved in the same directory where the script is located.
 
-The <a> tag inside the <h2> tag with class "h3 lh-condensed"
-
-The href attribute, which contains the repository path (e.g., /DrKLO/Telegram)
-
-A full GitHub URL is built by prepending https://github.com
-
-The repository name is cleaned by stripping slashes
-
-Generate a Timestamped Filename
-A filename is created using the current date and time in the format dd-mm-yyyy_HHMMSS, ensuring uniqueness and traceability.
-
-Write Data to CSV
-The script writes the data to a CSV file with columns: ranking, repository name, and link. Only the top 5 repositories are recorded.
-
-Save Output
-The CSV file is saved in the same directory where the script is located.
