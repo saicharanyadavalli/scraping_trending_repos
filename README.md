@@ -24,51 +24,43 @@ Install them using pip if needed:
 pip install requests beautifulsoup4
 ```
 
-✅ 📌 Description (70–80 words)
+## 📌 Description (70–80 words)
 This Python script scrapes the top 5 trending repositories from GitHub Trending and saves the ranking, repository name, and link into a CSV file. It uses the requests library to fetch HTML and BeautifulSoup to parse the content. The output file is timestamped with the current date and time in the format dd-mm-yyyy_HHMMSS and saved in the same directory. This tool is helpful for quickly tracking what’s popular on GitHub at any moment.
 
-✅ 🧠 Approach
-Step-by-step:
-Import Libraries
+## 🧠 Approach
+Import Required Libraries
+The script uses the following libraries:
 
-requests for making HTTP requests
+requests for sending HTTP requests
 
-BeautifulSoup from bs4 for HTML parsing
+BeautifulSoup from bs4 for parsing the HTML content
 
-csv to write data to a file
+csv to write the scraped data into a CSV file
 
-datetime to generate a timestamp for the filename
+datetime to generate a timestamp for the output file name
 
-Fetch Web Page
-
-Use requests.get() to get the HTML content from https://github.com/trending.
+Fetch the GitHub Trending Page
+The script sends a GET request to https://github.com/trending to retrieve the current list of trending repositories.
 
 Parse HTML Content
+The fetched HTML content is parsed using BeautifulSoup with the lxml parser. The script searches for all <article> tags with the class "Box-row", each representing one trending repository.
 
-Use BeautifulSoup(html, 'lxml') to convert raw HTML into a structured format.
+Extract Repository Data
+From each article block, the script extracts:
 
-Find all <article> blocks with class "Box-row" which contain each repo listing.
+The <a> tag inside the <h2> tag with class "h3 lh-condensed"
 
-Extract Repository Info
+The href attribute, which contains the repository path (e.g., /DrKLO/Telegram)
 
-From each article block, extract:
+A full GitHub URL is built by prepending https://github.com
 
-The <a> tag inside <h2> with class "h3 lh-condensed"
+The repository name is cleaned by stripping slashes
 
-The href attribute (relative link)
+Generate a Timestamped Filename
+A filename is created using the current date and time in the format dd-mm-yyyy_HHMMSS, ensuring uniqueness and traceability.
 
-Combine it with https://github.com to get the full link
+Write Data to CSV
+The script writes the data to a CSV file with columns: ranking, repository name, and link. Only the top 5 repositories are recorded.
 
-Strip slashes to get the repository name
-
-Write to CSV
-
-Create a CSV file named like trendingrepos_23-06-2025_210350.csv
-
-Write column headers: ranking, repository name, link
-
-Write the top 5 entries into the file
-
-Save Location
-
-The CSV is saved in the same directory as the script.
+Save Output
+The CSV file is saved in the same directory where the script is located.
